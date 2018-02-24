@@ -1,7 +1,7 @@
 {
 	'targets':[
 		{
-			'target_name':'fswin',
+			'target_name':'electron-fswin',
 			'conditions':[
 				['OS=="win"',{
 					'sources':[

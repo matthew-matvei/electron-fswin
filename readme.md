@@ -1,13 +1,16 @@
-Introduction
-============
+# Introduction
 
-[`fswin`](http://xxoo.github.com/node-fswin) is a native [`node.js`](http://nodejs.org) add-on that works on windows.
-It has ported some platform specified filesystem APIs. And made them easy to use in javascript.
+This is a fork of [`fswin`](http://xxoo.github.com/node-fswin), a native [`node.js`](http://nodejs.org) add-on that works on windows.
+It ports some platform specified filesystem APIs and made them easy to use in javascript.
+
+The motivation for this fork is to make the module more compatible with any Electron application (particularly when building depencies
+with `electron-builder install-app-deps`), and provides typings to work better with TypeScript.
+
+All rights (and most responsibilities ;) ) are still held by the original author, Xiao Shen.
 
 For details and examples see [wiki](https://github.com/xxoo/node-fswin/wiki)
 
-License
-=======
+## License
 
 	Copyright Xiao Shen and other fsWin contributors. All rights reserved.
 	Permission is hereby granted, free of charge, to any person obtaining a copy

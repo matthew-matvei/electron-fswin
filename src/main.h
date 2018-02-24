@@ -3,7 +3,6 @@
 #include <node.h>
 #include <node_object_wrap.h>
 #include <uv.h>
-//#include <iostream>
 
 //#pragma comment(lib, "iojs.lib")
 
@@ -11,63 +10,65 @@ using namespace v8;
 using namespace node;
 
 #if NODE_MODULE_VERSION < 11
-#	define AFTERWORKCB(name) void (name)(uv_work_t *req)
+#define AFTERWORKCB(name) void(name)(uv_work_t * req)
 #else
-#	define AFTERWORKCB(name) void (name)(uv_work_t *req, int status)
+#define AFTERWORKCB(name) void(name)(uv_work_t * req, int status)
 #endif
 
 #if NODE_MODULE_VERSION < 14
-#	define SETWITHATTR(obj, key, value, attr) (obj)->Set((key), (value), (attr))
+#define SETWITHATTR(obj, key, value, attr) (obj)->Set((key), (value), (attr))
 #elif NODE_MODULE_VERSION < 46
-#	define SETWITHATTR(obj, key, value, attr) (obj)->ForceSet((key), (value), (attr))
+#define SETWITHATTR(obj, key, value, attr) (obj)->ForceSet((key), (value), (attr))
 #else
-#	define SETWITHATTR(obj, key, value, attr) (obj)->DefineOwnProperty(isolate->GetCurrentContext(), (key), (value), (attr))
+#define SETWITHATTR(obj, key, value, attr) (obj)->DefineOwnProperty(isolate->GetCurrentContext(), (key), (value), (attr))
 #endif
 
 #if NODE_MODULE_VERSION < 14
-#	define ASYNCCB(name) void (name)(uv_async_t *hnd, int status)
-#	define ISOLATE
-#	define ISOLATE_C
-#	define ISOLATE_NEW
-#	define ISOLATE_NEW_ARGS
-#	define RETURNTYPE Handle
-#	define RETURN(v) return scope.Close(v)
-#	define RETURN_SCOPE(v) RETURN(v)
-#	define NEWSTRING(v) String::New((v))
-#	define NEWSTRING_TWOBYTES(v) String::New((uint16_t*)(v))
-#	define NEWSTRING_TWOBYTES_LEN(v, l) String::New((uint16_t*)(v), (l))
-#	define THROWEXCEPTION(v) ThrowException(Exception::Error(String::New((v))))
-#	define JSFUNC(name) Handle<Value> (name)(const Arguments& args)
-#	define PERSISTENT_NEW(name, v, t) (name) = Persistent<t>::New((v))
-#	define PERSISTENT_CONV(v, t) (v)
-#	define PERSISTENT_RELEASE(name) (name).Dispose();(name).Clear()
-#	define SCOPE HandleScope scope
-#	define SCOPE_ESCAPABLE SCOPE
-#	define OBJ_HANDLE handle_
-#	define THEASYNCOVERLAP overlapped
-#	define NEWFUNCTION(call) FunctionTemplate::New((call))->GetFunction()
+#define ASYNCCB(name) void(name)(uv_async_t * hnd, int status)
+#define ISOLATE
+#define ISOLATE_C
+#define ISOLATE_NEW
+#define ISOLATE_NEW_ARGS
+#define RETURNTYPE Handle
+#define RETURN(v) return scope.Close(v)
+#define RETURN_SCOPE(v) RETURN(v)
+#define NEWSTRING(v) String::New((v))
+#define NEWSTRING_TWOBYTES(v) String::New((uint16_t *)(v))
+#define NEWSTRING_TWOBYTES_LEN(v, l) String::New((uint16_t *)(v), (l))
+#define THROWEXCEPTION(v) ThrowException(Exception::Error(String::New((v))))
+#define JSFUNC(name) Handle<Value>(name)(const Arguments &args)
+#define PERSISTENT_NEW(name, v, t) (name) = Persistent<t>::New((v))
+#define PERSISTENT_CONV(v, t) (v)
+#define PERSISTENT_RELEASE(name) \
+	(name).Dispose();            \
+	(name).Clear()
+#define SCOPE HandleScope scope
+#define SCOPE_ESCAPABLE SCOPE
+#define OBJ_HANDLE handle_
+#define THEASYNCOVERLAP overlapped
+#define NEWFUNCTION(call) FunctionTemplate::New((call))->GetFunction()
 #else
-#	define ASYNCCB(name) void (name)(uv_async_t *hnd)
-#	define ISOLATE isolate
-#	define ISOLATE_C isolate,
-#	define ISOLATE_NEW Isolate *isolate = Isolate::GetCurrent()
-#	define ISOLATE_NEW_ARGS Isolate *isolate = args.GetIsolate()
-#	define RETURNTYPE Local
-#	define RETURN(v) args.GetReturnValue().Set((v))
-#	define RETURN_SCOPE(v) return scope.Escape((v))
-#	define NEWSTRING(v) String::NewFromOneByte(isolate, (uint8_t*)(v))
-#	define NEWSTRING_TWOBYTES(v) String::NewFromTwoByte(isolate, (uint16_t*)(v))
-#	define NEWSTRING_TWOBYTES_LEN(v, l) String::NewFromTwoByte(isolate, (uint16_t*)(v), String::kNormalString, (l))
-#	define THROWEXCEPTION(v) isolate->ThrowException(Exception::Error(String::NewFromOneByte(isolate, (uint8_t*)(v))))
-#	define JSFUNC(name) void (name)(const FunctionCallbackInfo<Value>& args)
-#	define PERSISTENT_NEW(name, v, t) (name).Reset(isolate, (v))
-#	define PERSISTENT_CONV(v, t) Local<t>::New(isolate, (v))
-#	define PERSISTENT_RELEASE(name) (name).Reset()
-#	define SCOPE HandleScope scope(isolate)
-#	define SCOPE_ESCAPABLE EscapableHandleScope scope(isolate)
-#	define OBJ_HANDLE persistent()
-#	define THEASYNCOVERLAP u.io.overlapped
-#	define NEWFUNCTION(call) Function::New(isolate, (call))
+#define ASYNCCB(name) void(name)(uv_async_t * hnd)
+#define ISOLATE isolate
+#define ISOLATE_C isolate,
+#define ISOLATE_NEW Isolate *isolate = Isolate::GetCurrent()
+#define ISOLATE_NEW_ARGS Isolate *isolate = args.GetIsolate()
+#define RETURNTYPE Local
+#define RETURN(v) args.GetReturnValue().Set((v))
+#define RETURN_SCOPE(v) return scope.Escape((v))
+#define NEWSTRING(v) String::NewFromOneByte(isolate, (uint8_t *)(v))
+#define NEWSTRING_TWOBYTES(v) String::NewFromTwoByte(isolate, (uint16_t *)(v))
+#define NEWSTRING_TWOBYTES_LEN(v, l) String::NewFromTwoByte(isolate, (uint16_t *)(v), String::kNormalString, (l))
+#define THROWEXCEPTION(v) isolate->ThrowException(Exception::Error(String::NewFromOneByte(isolate, (uint8_t *)(v))))
+#define JSFUNC(name) void(name)(const FunctionCallbackInfo<Value> &args)
+#define PERSISTENT_NEW(name, v, t) (name).Reset(isolate, (v))
+#define PERSISTENT_CONV(v, t) Local<t>::New(isolate, (v))
+#define PERSISTENT_RELEASE(name) (name).Reset()
+#define SCOPE HandleScope scope(isolate)
+#define SCOPE_ESCAPABLE EscapableHandleScope scope(isolate)
+#define OBJ_HANDLE persistent()
+#define THEASYNCOVERLAP u.io.overlapped
+#define NEWFUNCTION(call) Function::New(isolate, (call))
 #endif
 
 #define SYB_ERR_WRONG_ARGUMENTS "WRONG_ARGUMENTS"
@@ -106,11 +107,11 @@ using namespace node;
 #define SYB_ATTR_CONST (PropertyAttribute)(ReadOnly | DontDelete)
 
 #ifndef FILE_ATTRIBUTE_INTEGRITY_STREAM
-#	define FILE_ATTRIBUTE_INTEGRITY_STREAM 0x8000
+#define FILE_ATTRIBUTE_INTEGRITY_STREAM 0x8000
 #endif
 
 #ifndef FILE_ATTRIBUTE_NO_SCRUB_DATA
-#	define FILE_ATTRIBUTE_NO_SCRUB_DATA 0x20000
+#define FILE_ATTRIBUTE_NO_SCRUB_DATA 0x20000
 #endif
 
 #ifndef GetFinalPathNameByHandle
@@ -120,29 +121,40 @@ static const GetFinalPathNameByHandle GetFinalPathNameByHandleW = (GetFinalPathN
 
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 
-static wchar_t *getCurrentPathByHandle(HANDLE hnd) {
+static wchar_t *getCurrentPathByHandle(HANDLE hnd)
+{
 	wchar_t *r = NULL;
-	if ((void*)GetFinalPathNameByHandleW) {//check whether GetFinalPathNameByHandleW is supported
+	if ((void *)GetFinalPathNameByHandleW)
+	{ //check whether GetFinalPathNameByHandleW is supported
 		DWORD sz = GetFinalPathNameByHandleW(hnd, NULL, 0, FILE_NAME_NORMALIZED);
-		if (sz > 0) {
-			wchar_t *s = (wchar_t*)malloc(sizeof(wchar_t)*sz);
-			wchar_t *s1 = L"\\\\?\\UNC\\";//for network paths
-			wchar_t *s2 = L"\\\\?\\";//for local paths
+		if (sz > 0)
+		{
+			wchar_t *s = (wchar_t *)malloc(sizeof(wchar_t) * sz);
+			wchar_t *s1 = L"\\\\?\\UNC\\"; //for network paths
+			wchar_t *s2 = L"\\\\?\\";	  //for local paths
 			DWORD sz1 = (DWORD)wcslen(s1);
 			DWORD sz2 = (DWORD)wcslen(s2);
 			GetFinalPathNameByHandleW(hnd, s, sz, FILE_NAME_NORMALIZED);
-			if (wcsncmp(s, s1, sz1) == 0) {
+			if (wcsncmp(s, s1, sz1) == 0)
+			{
 				sz = sz1 - 2;
 				s[sz] = L'\\';
-			} else if (wcsncmp(s, s2, sz2) == 0 && ((s[sz2] >= L'a'&&s[sz2] <= L'z') || (s[sz2] >= L'A'&&s[sz2] <= L'Z')) && s[sz2 + 1] == L':') {
+			}
+			else if (wcsncmp(s, s2, sz2) == 0 && ((s[sz2] >= L'a' && s[sz2] <= L'z') || (s[sz2] >= L'A' && s[sz2] <= L'Z')) && s[sz2 + 1] == L':')
+			{
 				sz = (DWORD)wcslen(s2);
-			} else {
+			}
+			else
+			{
 				sz = 0;
 			}
-			if (sz > 0) {
+			if (sz > 0)
+			{
 				r = _wcsdup(&s[sz]);
 				free(s);
-			} else {
+			}
+			else
+			{
 				r = s;
 			}
 		}
@@ -150,22 +162,29 @@ static wchar_t *getCurrentPathByHandle(HANDLE hnd) {
 	return r;
 }
 
-static bool ensurePrivilege(const wchar_t *privilegeName) {
+static bool ensurePrivilege(const wchar_t *privilegeName)
+{
 	bool result = false;
 	HANDLE hToken;
-	if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken)) {
+	if (OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken))
+	{
 		LUID tkid;
-		if (LookupPrivilegeValueW(NULL, privilegeName, &tkid)) {
+		if (LookupPrivilegeValueW(NULL, privilegeName, &tkid))
+		{
 			PRIVILEGE_SET ps;
 			ps.PrivilegeCount = 1;
 			ps.Control = PRIVILEGE_SET_ALL_NECESSARY;
 			ps.Privilege[0].Luid = tkid;
 			ps.Privilege[0].Attributes = SE_PRIVILEGE_ENABLED;
 			BOOL chkresult;
-			if (PrivilegeCheck(hToken, &ps, &chkresult)) {
-				if (chkresult) {
+			if (PrivilegeCheck(hToken, &ps, &chkresult))
+			{
+				if (chkresult)
+				{
 					result = true;
-				} else {
+				}
+				else
+				{
 					TOKEN_PRIVILEGES tp;
 					tp.PrivilegeCount = 1;
 					tp.Privileges[0] = ps.Privilege[0];
@@ -178,13 +197,15 @@ static bool ensurePrivilege(const wchar_t *privilegeName) {
 	return result;
 }
 
-static ULONGLONG combineHiLow(const DWORD hi, const DWORD low) {
+static ULONGLONG combineHiLow(const DWORD hi, const DWORD low)
+{
 	ULARGE_INTEGER ul;
 	ul.HighPart = hi;
 	ul.LowPart = low;
 	return ul.QuadPart;
 }
 
-static double fileTimeToJsDateVal(const FILETIME *ft) {//Date::New(fileTimeToJsDateVal(&filetime)) converts FILETIME to javascript date
+static double fileTimeToJsDateVal(const FILETIME *ft)
+{ //Date::New(fileTimeToJsDateVal(&filetime)) converts FILETIME to javascript date
 	return (double)(combineHiLow(ft->dwHighDateTime, ft->dwLowDateTime) / 10000 - 11644473600000);
 }

@@ -1,15 +1,15 @@
 {
-	"name": "fswin",
-	"version": "2.17.602",
-	"description": "nodejs fs extensions for windows",
+	"name": "electron-fswin",
+	"version": "2.18.0",
+	"description": "Electron fs extensions for Windows",
 	"main": "index.js",
-	"engines": {
-		"node": ">= 0.6"
-	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/xxoo/node-fswin.git"
+		"url": "https://github.com/matthew-matvei/node-fswin.git"
 	},
+	"os": [
+		"win32"
+	],
 	"keywords": [
 		"native",
 		"fs",
@@ -20,6 +20,9 @@
 		"ntfs"
 	],
 	"author": "Xiao Shen",
+	"contributors": [
+		"Matthew James"
+	],
 	"license": "BSD",
 	"readmeFilename": "readme.md"
 }
