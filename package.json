@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/matthew-matvei/node-fswin.git"
+		"url": "https://github.com/matthew-matvei/electron-fswin.git"
 	},
 	"os": [
 		"win32"
