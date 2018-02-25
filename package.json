@@ -1,15 +1,12 @@
 {
 	"name": "electron-fswin",
-	"version": "2.18.1",
+	"version": "2.18.2",
 	"description": "Electron fs extensions for Windows",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/matthew-matvei/electron-fswin.git"
 	},
-	"os": [
-		"win32"
-	],
 	"keywords": [
 		"native",
 		"fs",

@@ -1,14 +1,24 @@
 # Introduction
 
-This is a fork of [`fswin`](http://xxoo.github.com/node-fswin), a native [`node.js`](http://nodejs.org) add-on that works on windows.
-It ports some platform specified filesystem APIs and made them easy to use in javascript.
+This is a fork of [`fswin`](http://xxoo.github.com/node-fswin), a native
+[`node.js`](http://nodejs.org) add-on that works on windows. It ports some platform
+specified filesystem APIs and made them easy to use in javascript.
 
-The motivation for this fork is to make the module more compatible with any Electron application (particularly when building depencies
-with `electron-builder install-app-deps`), and provides typings to work better with TypeScript.
+The motivation for this fork is to make the module more compatible with any Electron
+application (particularly when building dependencies with
+`electron-builder install-app-deps`), and provides typings to work better with TypeScript.
 
-All rights (and most responsibilities ;) ) are still held by the original author, Xiao Shen.
+All rights (and most responsibilities ;) ) are still held by the original author,
+Xiao Shen.
 
 For details and examples see [wiki](https://github.com/xxoo/node-fswin/wiki)
+
+## System requirements
+
+In order to work well with TypeScript code that attempts to import this package,
+it does not demand the 'win32' OS explicitly in the `package.json`. However, calling
+code still needs to account for this if developing across systems. The simplest
+way is to not invoke its functionality when `process.platform !== "win32"`.
 
 ## License
 
